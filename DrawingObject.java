@@ -1,7 +1,7 @@
 import java.awt.*;
 
 public class DrawingObject {
-    int x1, y1, x2, y2;
+    public int x1, y1, x2, y2;
     DrawMode type;
     Color color;
 

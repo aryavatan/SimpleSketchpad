@@ -103,6 +103,13 @@ class Sketchpad extends Frame implements ActionListener {
             y0 = e.getY();
             x = x0;
             y = y0;
+
+            switch(drawMode){
+                case LINE:
+                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
+                    break;
+                default:
+            }
         }
 
         public void mouseReleased(MouseEvent e) { 
@@ -113,8 +120,8 @@ class Sketchpad extends Frame implements ActionListener {
                 case LINE:
                     x = e.getX();
                     y = e.getY();
-                    g.drawLine(x0, y0, x, y);
-                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
+                    drawingObjects.get(drawingObjects.size()-1).x2 = x;
+                    drawingObjects.get(drawingObjects.size()-1).y2 = y;
                     break;
                 default:
                     break;
@@ -138,6 +145,13 @@ class Sketchpad extends Frame implements ActionListener {
                     y = e.getY();
                     g.drawLine(x0, y0, x, y);
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
+                    break;
+                case LINE:
+                    x = e.getX();
+                    y = e.getY();
+                    drawingObjects.get(drawingObjects.size()-1).x2 = x;
+                    drawingObjects.get(drawingObjects.size()-1).y2 = y;
+                    repaint();
                     break;
                 default:
                     break;
