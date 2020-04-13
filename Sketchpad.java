@@ -50,13 +50,16 @@ class Sketchpad extends Frame implements ActionListener {
         fileMenu.add(clear);
         bar.add(fileMenu);
 
-        Menu drawModeMenu = new Menu("Drawing Mode");
+        Menu drawModeMenu = new Menu("Drawing Mode");  // Drawing Modes Menu
         MenuItem freehand = new MenuItem("Freehand");
         freehand.addActionListener(this);
         MenuItem line = new MenuItem("Straight Line");
         line.addActionListener(this);
+        MenuItem rect = new MenuItem("Rectangle");
+        rect.addActionListener(this);
         drawModeMenu.add(freehand);
         drawModeMenu.add(line);
+        drawModeMenu.add(rect);
         bar.add(drawModeMenu);
 
         Menu colorMenu = new Menu("Color");  // Color Menu
@@ -106,6 +109,7 @@ class Sketchpad extends Frame implements ActionListener {
 
             switch(drawMode){
                 case LINE:
+                case RECTANGLE:
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
@@ -118,6 +122,7 @@ class Sketchpad extends Frame implements ActionListener {
 
             switch(drawMode){
                 case LINE:
+                case RECTANGLE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -147,6 +152,7 @@ class Sketchpad extends Frame implements ActionListener {
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 case LINE:
+                case RECTANGLE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -175,6 +181,9 @@ class Sketchpad extends Frame implements ActionListener {
         else if(e.getActionCommand().equals("Straight Line")){
             this.drawMode = DrawMode.LINE;
         }
+        else if(e.getActionCommand().equals("Rectangle")){
+            this.drawMode = DrawMode.RECTANGLE;
+        }
 
         // Color Selection
         else if(e.getActionCommand().equals("Black")){
@@ -196,6 +205,7 @@ class Sketchpad extends Frame implements ActionListener {
         updateInfoPanel();  // Update info panel if drawing mode or color changed
     }
 
+    // Updates the info panel with the current drawing mode and color selected
     private void updateInfoPanel(){
         // Update drawing mode label
         String base = "Drawing Mode: %s";
@@ -205,6 +215,9 @@ class Sketchpad extends Frame implements ActionListener {
                 break;
             case LINE:
                 lMode.setText(String.format(base, "Straight Line"));
+                break;
+            case RECTANGLE:
+                lMode.setText(String.format(base, "Rectangle"));
                 break;
             default:
         }
@@ -224,5 +237,6 @@ class Sketchpad extends Frame implements ActionListener {
 // Drawing Modes Enum
 enum DrawMode {
     FREEHAND,
-    LINE
+    LINE,
+    RECTANGLE
 }

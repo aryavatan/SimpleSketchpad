@@ -21,6 +21,15 @@ public class DrawingObject {
             case LINE:
                 g.drawLine(x1, y1, x2, y2);
                 break;
+            case RECTANGLE:
+                int width = x2 - x1;
+                int height = y2 - y1;
+                int startX = width > 0 ? x1 : x2;
+                int startY = height > 0 ? y1 : y2;
+                width = width > 0 ? width : -width;
+                height = height > 0 ? height : -height;
+                g.drawRect(startX, startY, width, height);
+                break;
             default:
         }
     }
