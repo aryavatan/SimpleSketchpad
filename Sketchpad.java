@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;  
 
 class Sketchpad extends Frame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -88,6 +89,7 @@ class Sketchpad extends Frame implements ActionListener {
     }
 
     // Global Variables
+    ArrayList<DrawingObject> drawingObjects = new ArrayList<DrawingObject>();
     DrawMode drawMode = DrawMode.FREEHAND;
     Color color = Color.BLACK;
     int x0, y0, x, y;
@@ -112,6 +114,7 @@ class Sketchpad extends Frame implements ActionListener {
                     x = e.getX();
                     y = e.getY();
                     g.drawLine(x0, y0, x, y);
+                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
                     break;
@@ -134,6 +137,7 @@ class Sketchpad extends Frame implements ActionListener {
                     x = e.getX();
                     y = e.getY();
                     g.drawLine(x0, y0, x, y);
+                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
                     break;
@@ -145,6 +149,7 @@ class Sketchpad extends Frame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Clear Canvas
         if(e.getActionCommand().equals("Clear")){
+            drawingObjects.clear();
             repaint();
             return;
         }
@@ -192,6 +197,13 @@ class Sketchpad extends Frame implements ActionListener {
 
         // Update color panel
         pColor.setBackground(this.color);
+    }
+
+    // Redraws all previous drawing objects when repaint() is called
+    public void paint(Graphics g){
+        for(DrawingObject object : drawingObjects){
+            object.draw(g);
+        }
     }
 }
 
