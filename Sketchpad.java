@@ -57,9 +57,12 @@ class Sketchpad extends Frame implements ActionListener {
         line.addActionListener(this);
         MenuItem rect = new MenuItem("Rectangle");
         rect.addActionListener(this);
+        MenuItem ellipse = new MenuItem("Ellipse");
+        ellipse.addActionListener(this);
         drawModeMenu.add(freehand);
         drawModeMenu.add(line);
         drawModeMenu.add(rect);
+        drawModeMenu.add(ellipse);
         bar.add(drawModeMenu);
 
         Menu colorMenu = new Menu("Color");  // Color Menu
@@ -110,6 +113,7 @@ class Sketchpad extends Frame implements ActionListener {
             switch(drawMode){
                 case LINE:
                 case RECTANGLE:
+                case ELLIPSE:
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
@@ -123,6 +127,7 @@ class Sketchpad extends Frame implements ActionListener {
             switch(drawMode){
                 case LINE:
                 case RECTANGLE:
+                case ELLIPSE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -153,6 +158,7 @@ class Sketchpad extends Frame implements ActionListener {
                     break;
                 case LINE:
                 case RECTANGLE:
+                case ELLIPSE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -183,6 +189,9 @@ class Sketchpad extends Frame implements ActionListener {
         }
         else if(e.getActionCommand().equals("Rectangle")){
             this.drawMode = DrawMode.RECTANGLE;
+        }
+        else if(e.getActionCommand().equals("Ellipse")){
+            this.drawMode = DrawMode.ELLIPSE;
         }
 
         // Color Selection
@@ -219,6 +228,9 @@ class Sketchpad extends Frame implements ActionListener {
             case RECTANGLE:
                 lMode.setText(String.format(base, "Rectangle"));
                 break;
+            case ELLIPSE:
+                lMode.setText(String.format(base, "Ellipse"));
+                break;
             default:
         }
 
@@ -238,5 +250,6 @@ class Sketchpad extends Frame implements ActionListener {
 enum DrawMode {
     FREEHAND,
     LINE,
-    RECTANGLE
+    RECTANGLE,
+    ELLIPSE
 }
