@@ -3,25 +3,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.*;
 
 class Sketchpad extends Frame {
+    private static final long serialVersionUID = 1L;
 
+    // Main Method
     public static void main(String args[]) {
         new Sketchpad().setVisible(true);
     }
 
+    // Sketchpad Constructor
     Sketchpad() {
-        // Button b = new Button("click me");
-        // b.setBounds(30, 100, 80, 30);// setting button position
-        // add(b);// adding button into frame
-        // setLayout(null);// no layout manager
-
         setSize(1000, 800);
         addMouseListener(new myMouseHandler());
         addMouseMotionListener(new myMouseMotionHandler());
     }
 
+    // Global Variables
     DrawMode drawMode = DrawMode.FREEHAND;
     int x0, y0, x, y;
 
+    // Mouse Handler
     public class myMouseHandler extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
             x0 = e.getX(); 
@@ -33,6 +33,7 @@ class Sketchpad extends Frame {
         public void mouseReleased(MouseEvent e) { }
     }
 
+    // Mouse Motion Handler
     public class myMouseMotionHandler extends MouseMotionAdapter {
         public void mouseMoved (MouseEvent e) { }
 
@@ -44,20 +45,18 @@ class Sketchpad extends Frame {
                     y0 = y;
                     x = e.getX();
                     y = e.getY();
-                    getGraphics().drawLine(x0, y0, x, y);
+                    Graphics g = getGraphics();
+                    g.setColor(Color.blue);
+                    g.drawLine(x0, y0, x, y);
                     break;
                 default:
                     break;
             }
         }
     }
-
-    public void paint(Graphics g){
-        g.drawLine(x0, y0, x, y);
-    }
-
 }
 
+// Drawing Modes Enum
 enum DrawMode {
     FREEHAND
 }
