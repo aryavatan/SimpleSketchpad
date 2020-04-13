@@ -12,9 +12,26 @@ class Sketchpad extends Frame {
 
     // Sketchpad Constructor
     Sketchpad() {
+        // Frame
+        setTitle("Simple Sketchpad");
         setSize(1000, 800);
+        setLayout(null);
+
+        // Tool Panel
+        Panel panel = new Panel();
+        panel.setBounds(0,30, this.getWidth()+3000, 40);
+        panel.setBackground(Color.darkGray);
+        this.add(panel);
+
+        // Event Listeners
         addMouseListener(new myMouseHandler());
         addMouseMotionListener(new myMouseMotionHandler());
+        addWindowListener(new WindowAdapter(){  // Closing the window
+            public void windowClosing(WindowEvent e) {  
+                dispose();  
+            }  
+        });  
+
     }
 
     // Global Variables
@@ -24,8 +41,8 @@ class Sketchpad extends Frame {
     // Mouse Handler
     public class myMouseHandler extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
-            x0 = e.getX(); 
-            y0 = e.getY(); 
+            x0 = e.getX();
+            y0 = e.getY();
             x = x0;
             y = y0;
         }
@@ -35,11 +52,10 @@ class Sketchpad extends Frame {
 
     // Mouse Motion Handler
     public class myMouseMotionHandler extends MouseMotionAdapter {
-        public void mouseMoved (MouseEvent e) { }
+        public void mouseMoved(MouseEvent e) { }
 
-        public void mouseDragged (MouseEvent e) {
-
-            switch(drawMode){
+        public void mouseDragged(MouseEvent e) {
+            switch (drawMode) {
                 case FREEHAND:
                     x0 = x;
                     y0 = y;
