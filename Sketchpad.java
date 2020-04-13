@@ -16,11 +16,28 @@ class Sketchpad extends Frame implements ActionListener {
         setSize(1000, 800);
         setLayout(null);
         setVisible(true);
+        Color grey = new Color(245,245,245);
+
+        // Panel Labels
+        lMode = new Label("Drawing Mode: Freehand");
+        lMode.setBackground(grey);
+        lMode.setForeground(Color.gray);
+        lMode.setBounds(47, 40, 180, 20);
+        this.add(lMode);
+        Label lColor = new Label("Color:");
+        lColor.setBackground(grey);
+        lColor.setForeground(Color.gray);
+        lColor.setBounds(240, 40, 40, 20);
+        this.add(lColor);
+        pColor = new Panel();
+        pColor.setBounds(280, 43, 15, 15);
+        pColor.setBackground(this.color);
+        this.add(pColor);
 
         // Panel
         Panel panel = new Panel();
         panel.setBounds(0, 30, this.getWidth() + 3000, 40);
-        panel.setBackground(Color.lightGray);
+        panel.setBackground(grey);
         this.add(panel);
 
         // Menu Bar
@@ -74,6 +91,8 @@ class Sketchpad extends Frame implements ActionListener {
     DrawMode drawMode = DrawMode.FREEHAND;
     Color color = Color.BLACK;
     int x0, y0, x, y;
+    Label lMode;
+    Panel pColor;
 
     // Mouse Handler
     public class myMouseHandler extends MouseAdapter {
@@ -93,6 +112,8 @@ class Sketchpad extends Frame implements ActionListener {
                     x = e.getX();
                     y = e.getY();
                     g.drawLine(x0, y0, x, y);
+                    break;
+                default:
                     break;
             }
         }
@@ -152,6 +173,25 @@ class Sketchpad extends Frame implements ActionListener {
         else if(e.getActionCommand().equals("Yellow")){
             this.color = Color.YELLOW;
         }
+
+        updateInfoPanel();  // Update info panel if drawing mode or color changed
+    }
+
+    private void updateInfoPanel(){
+        // Update drawing mode label
+        String base = "Drawing Mode: %s";
+        switch(drawMode){
+            case FREEHAND:
+                lMode.setText(String.format(base, "Freehand"));
+                break;
+            case LINE:
+                lMode.setText(String.format(base, "Straight Line"));
+                break;
+            default:
+        }
+
+        // Update color panel
+        pColor.setBackground(this.color);
     }
 }
 
