@@ -25,12 +25,23 @@ class Sketchpad extends Frame implements ActionListener {
 
         // Menu Bar
         MenuBar bar = new MenuBar();
-        Menu fileMenu = new Menu("File");
+
+        Menu fileMenu = new Menu("File");  // File Menu
         MenuItem clear = new MenuItem("Clear");
         clear.addActionListener(this);
         fileMenu.add(clear);
         bar.add(fileMenu);
-        Menu colorMenu = new Menu("Color");
+
+        Menu drawModeMenu = new Menu("Drawing Mode");
+        MenuItem freehand = new MenuItem("Freehand");
+        freehand.addActionListener(this);
+        MenuItem line = new MenuItem("Straight Line");
+        line.addActionListener(this);
+        drawModeMenu.add(freehand);
+        drawModeMenu.add(line);
+        bar.add(drawModeMenu);
+
+        Menu colorMenu = new Menu("Color");  // Color Menu
         MenuItem black = new MenuItem("Black");
         black.addActionListener(this);
         MenuItem blue = new MenuItem("Blue");
@@ -73,7 +84,18 @@ class Sketchpad extends Frame implements ActionListener {
             y = y0;
         }
 
-        public void mouseReleased(MouseEvent e) { }
+        public void mouseReleased(MouseEvent e) { 
+            Graphics g = getGraphics();
+            g.setColor(color);
+
+            switch(drawMode){
+                case LINE:
+                    x = e.getX();
+                    y = e.getY();
+                    g.drawLine(x0, y0, x, y);
+                    break;
+            }
+        }
     }
 
     // Mouse Motion Handler
@@ -106,8 +128,16 @@ class Sketchpad extends Frame implements ActionListener {
             return;
         }
 
+        // Drawing Mode Selection
+        if(e.getActionCommand().equals("Freehand")){
+            this.drawMode = DrawMode.FREEHAND;
+        }
+        else if(e.getActionCommand().equals("Straight Line")){
+            this.drawMode = DrawMode.LINE;
+        }
+
         // Color Selection
-        if(e.getActionCommand().equals("Black")){
+        else if(e.getActionCommand().equals("Black")){
             this.color = Color.BLACK;
         }
         else if(e.getActionCommand().equals("Blue")){
@@ -127,5 +157,6 @@ class Sketchpad extends Frame implements ActionListener {
 
 // Drawing Modes Enum
 enum DrawMode {
-    FREEHAND
+    FREEHAND,
+    LINE
 }
