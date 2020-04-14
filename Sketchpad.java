@@ -69,12 +69,15 @@ class Sketchpad extends Frame implements ActionListener {
         ellipse.addActionListener(this);
         MenuItem circle = new MenuItem("Circle");
         circle.addActionListener(this);
+        MenuItem erase = new MenuItem("Eraser");
+        erase.addActionListener(this);
         drawModeMenu.add(freehand);
         drawModeMenu.add(line);
         drawModeMenu.add(rect);
         drawModeMenu.add(square);
         drawModeMenu.add(ellipse);
         drawModeMenu.add(circle);
+        drawModeMenu.add(erase);
         bar.add(drawModeMenu);
 
         Menu colorMenu = new Menu("Color");  // Color Menu
@@ -165,6 +168,15 @@ class Sketchpad extends Frame implements ActionListener {
                     drawingObjects.get(drawingObjects.size()-1).y2 = y;
                     repaint();
                     break;
+                case ERASER:
+                    g.setColor(Color.WHITE);
+                    x0 = x;
+                    y0 = y;
+                    x = e.getX();
+                    y = e.getY();
+                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,Color.WHITE));
+                    drawingObjects.get(drawingObjects.size()-1).draw(getGraphics());
+                    break;
                 default:
                     break;
             }
@@ -207,6 +219,9 @@ class Sketchpad extends Frame implements ActionListener {
         }
         else if(e.getActionCommand().equals("Circle")){
             this.drawMode = DrawMode.CIRCLE;
+        }
+        else if(e.getActionCommand().equals("Eraser")){
+            this.drawMode = DrawMode.ERASER;
         }
 
         // Color Selection
@@ -252,6 +267,9 @@ class Sketchpad extends Frame implements ActionListener {
             case CIRCLE:
                 lMode.setText(String.format(base, "Circle"));
                 break;
+            case ERASER:
+                lMode.setText(String.format(base, "Eraser"));
+                break;
             default:
         }
 
@@ -274,5 +292,6 @@ enum DrawMode {
     RECTANGLE,
     ELLIPSE,
     SQUARE,
-    CIRCLE
+    CIRCLE,
+    ERASER
 }

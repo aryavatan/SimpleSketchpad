@@ -59,6 +59,13 @@ public class DrawingObject {
                 startY = height > 0 ? y1 : y1 - diameter;
                 g.drawArc(startX, startY, diameter, diameter, 0, 360);
                 break;
+            case ERASER:
+                startX = x2 - x1 > 0 ? x1 : x2;
+                startY = y2 - y1 > 0 ? y1 : y2;
+                width = x2 - x1 > 0 ? x2 - x1 : x1 - x2;
+                height = y2 - y1 > 0 ? y2 - y1 : y1 - y2;
+                g.fillArc(startX-5, startY-5, width+10, height+10, 0, 360);
+                break;
             default:
         }
     }
