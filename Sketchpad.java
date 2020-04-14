@@ -57,11 +57,14 @@ class Sketchpad extends Frame implements ActionListener {
         line.addActionListener(this);
         MenuItem rect = new MenuItem("Rectangle");
         rect.addActionListener(this);
+        MenuItem square = new MenuItem("Square");
+        square.addActionListener(this);
         MenuItem ellipse = new MenuItem("Ellipse");
         ellipse.addActionListener(this);
         drawModeMenu.add(freehand);
         drawModeMenu.add(line);
         drawModeMenu.add(rect);
+        drawModeMenu.add(square);
         drawModeMenu.add(ellipse);
         bar.add(drawModeMenu);
 
@@ -114,29 +117,14 @@ class Sketchpad extends Frame implements ActionListener {
                 case LINE:
                 case RECTANGLE:
                 case ELLIPSE:
+                case SQUARE:
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
             }
         }
 
-        public void mouseReleased(MouseEvent e) { 
-            Graphics g = getGraphics();
-            g.setColor(color);
-
-            switch(drawMode){
-                case LINE:
-                case RECTANGLE:
-                case ELLIPSE:
-                    x = e.getX();
-                    y = e.getY();
-                    drawingObjects.get(drawingObjects.size()-1).x2 = x;
-                    drawingObjects.get(drawingObjects.size()-1).y2 = y;
-                    break;
-                default:
-                    break;
-            }
-        }
+        public void mouseReleased(MouseEvent e) { }
     }
 
     // Mouse Motion Handler
@@ -159,6 +147,7 @@ class Sketchpad extends Frame implements ActionListener {
                 case LINE:
                 case RECTANGLE:
                 case ELLIPSE:
+                case SQUARE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -192,6 +181,9 @@ class Sketchpad extends Frame implements ActionListener {
         }
         else if(e.getActionCommand().equals("Ellipse")){
             this.drawMode = DrawMode.ELLIPSE;
+        }
+        else if(e.getActionCommand().equals("Square")){
+            this.drawMode = DrawMode.SQUARE;
         }
 
         // Color Selection
@@ -231,6 +223,9 @@ class Sketchpad extends Frame implements ActionListener {
             case ELLIPSE:
                 lMode.setText(String.format(base, "Ellipse"));
                 break;
+            case SQUARE:
+                lMode.setText(String.format(base, "Square"));
+                break;
             default:
         }
 
@@ -251,5 +246,6 @@ enum DrawMode {
     FREEHAND,
     LINE,
     RECTANGLE,
-    ELLIPSE
+    ELLIPSE,
+    SQUARE
 }

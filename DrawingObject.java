@@ -43,6 +43,14 @@ public class DrawingObject {
                 height = y2 - y1 > 0 ? y2 - y1 : y1 - y2;
                 g.drawArc(startX, startY, width, height, 0, 360);
                 break;
+            case SQUARE:
+                width = x2 - x1;
+                height = y2 - y1;
+                int side = Math.abs(width) > Math.abs(height) ? Math.abs(width) : Math.abs(height);
+                startX = width > 0 ? x1 : x1 - side;
+                startY = height > 0 ? y1 : y1 - side;
+                g.drawRect(startX, startY, side, side);
+                break;
             default:
         }
     }
