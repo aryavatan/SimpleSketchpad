@@ -61,11 +61,14 @@ class Sketchpad extends Frame implements ActionListener {
         square.addActionListener(this);
         MenuItem ellipse = new MenuItem("Ellipse");
         ellipse.addActionListener(this);
+        MenuItem circle = new MenuItem("Circle");
+        circle.addActionListener(this);
         drawModeMenu.add(freehand);
         drawModeMenu.add(line);
         drawModeMenu.add(rect);
         drawModeMenu.add(square);
         drawModeMenu.add(ellipse);
+        drawModeMenu.add(circle);
         bar.add(drawModeMenu);
 
         Menu colorMenu = new Menu("Color");  // Color Menu
@@ -118,6 +121,7 @@ class Sketchpad extends Frame implements ActionListener {
                 case RECTANGLE:
                 case ELLIPSE:
                 case SQUARE:
+                case CIRCLE:
                     drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
                     break;
                 default:
@@ -148,6 +152,7 @@ class Sketchpad extends Frame implements ActionListener {
                 case RECTANGLE:
                 case ELLIPSE:
                 case SQUARE:
+                case CIRCLE:
                     x = e.getX();
                     y = e.getY();
                     drawingObjects.get(drawingObjects.size()-1).x2 = x;
@@ -184,6 +189,9 @@ class Sketchpad extends Frame implements ActionListener {
         }
         else if(e.getActionCommand().equals("Square")){
             this.drawMode = DrawMode.SQUARE;
+        }
+        else if(e.getActionCommand().equals("Circle")){
+            this.drawMode = DrawMode.CIRCLE;
         }
 
         // Color Selection
@@ -226,6 +234,9 @@ class Sketchpad extends Frame implements ActionListener {
             case SQUARE:
                 lMode.setText(String.format(base, "Square"));
                 break;
+            case CIRCLE:
+                lMode.setText(String.format(base, "Circle"));
+                break;
             default:
         }
 
@@ -247,5 +258,6 @@ enum DrawMode {
     LINE,
     RECTANGLE,
     ELLIPSE,
-    SQUARE
+    SQUARE,
+    CIRCLE
 }

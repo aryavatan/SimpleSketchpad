@@ -51,6 +51,14 @@ public class DrawingObject {
                 startY = height > 0 ? y1 : y1 - side;
                 g.drawRect(startX, startY, side, side);
                 break;
+            case CIRCLE:
+                width = x2 - x1;
+                height = y2 - y1;
+                int diameter = Math.abs(width) > Math.abs(height) ? Math.abs(width) : Math.abs(height);
+                startX = width > 0 ? x1 : x1 - diameter;
+                startY = height > 0 ? y1 : y1 - diameter;
+                g.drawArc(startX, startY, diameter, diameter, 0, 360);
+                break;
             default:
         }
     }
