@@ -47,9 +47,12 @@ class Sketchpad extends Frame implements ActionListener {
         Menu fileMenu = new Menu("File");  // File Menu
         MenuItem save = new MenuItem("Save");
         save.addActionListener(this);
+        MenuItem open = new MenuItem("Open");
+        open.addActionListener(this);
         MenuItem clear = new MenuItem("Clear");
         clear.addActionListener(this);
         fileMenu.add(save);
+        fileMenu.add(open);
         fileMenu.add(clear);
         bar.add(fileMenu);
 
@@ -178,6 +181,11 @@ class Sketchpad extends Frame implements ActionListener {
         }
         else if(e.getActionCommand().equals("Save")){
             SaveSystem.Save(this, drawingObjects);
+            return;
+        }
+        else if(e.getActionCommand().equals("Open")){
+            drawingObjects = SaveSystem.Load(this);
+            repaint();
             return;
         }
 

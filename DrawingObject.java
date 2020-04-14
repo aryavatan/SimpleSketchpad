@@ -66,6 +66,6 @@ public class DrawingObject {
     // String representation of drawing object, used for saving to text file
     @Override
     public String toString() { 
-        return (x1 + "," + y1 + "," + x2 + "," + y2 + "," + type + "," + color);
+        return (x1 + "," + y1 + "," + x2 + "," + y2 + "," + type + "," + color.getRGB());
     } 
 }
