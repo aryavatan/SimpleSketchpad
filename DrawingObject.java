@@ -69,7 +69,6 @@ public class DrawingObject {
                 height = y2 - y1 > 0 ? y2 - y1 : y1 - y2;
                 g.fillArc(startX - 5, startY - 5, width + 10, height + 10, 0, 360);
                 break;
-                break;
             default:
         }
     }
