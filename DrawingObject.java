@@ -1,3 +1,6 @@
+
+package SimpleSketchpad;
+
 import java.awt.*;
 
 public class DrawingObject {
@@ -6,7 +9,7 @@ public class DrawingObject {
     Color color;
 
     // Drawing Object Constructor
-    public DrawingObject(int x1, int y1, int x2, int y2, DrawMode type, Color color){
+    public DrawingObject(int x1, int y1, int x2, int y2, DrawMode type, Color color) {
         this.x1 = x1;
         this.x2 = x2;
         this.y1 = y1;
@@ -16,11 +19,11 @@ public class DrawingObject {
     }
 
     // The draw method for the drawing object
-    public void draw(Graphics g){
-        int startX, startY, width, height;  // Used for drawing modes that require width and height
+    public void draw(Graphics g) {
+        int startX, startY, width, height; // Used for drawing modes that require width and height
         g.setColor(color);
-    
-        switch(type){
+
+        switch (type) {
             case FREEHAND:
             case LINE:
                 g.drawLine(x1, y1, x2, y2);
@@ -64,7 +67,8 @@ public class DrawingObject {
                 startY = y2 - y1 > 0 ? y1 : y2;
                 width = x2 - x1 > 0 ? x2 - x1 : x1 - x2;
                 height = y2 - y1 > 0 ? y2 - y1 : y1 - y2;
-                g.fillArc(startX-5, startY-5, width+10, height+10, 0, 360);
+                g.fillArc(startX - 5, startY - 5, width + 10, height + 10, 0, 360);
+                break;
                 break;
             default:
         }
@@ -72,7 +76,7 @@ public class DrawingObject {
 
     // String representation of drawing object, used for saving to text file
     @Override
-    public String toString() { 
+    public String toString() {
         return (x1 + "," + y1 + "," + x2 + "," + y2 + "," + type + "," + color.getRGB());
-    } 
+    }
 }

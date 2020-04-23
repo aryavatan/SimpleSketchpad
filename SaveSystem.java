@@ -1,3 +1,5 @@
+package SimpleSketchpad;
+
 import java.util.ArrayList;
 import java.awt.Container;
 import java.io.BufferedReader;

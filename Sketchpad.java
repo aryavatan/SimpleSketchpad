@@ -1,6 +1,8 @@
+package SimpleSketchpad;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;  
+import java.util.*;
 
 class Sketchpad extends Frame implements ActionListener {
     private static final long serialVersionUID = 1L;
@@ -17,7 +19,7 @@ class Sketchpad extends Frame implements ActionListener {
         setSize(1000, 800);
         setLayout(null);
         setVisible(true);
-        Color grey = new Color(245,245,245);
+        Color grey = new Color(245, 245, 245);
 
         // Panel Labels
         lMode = new Label("Drawing Mode: Freehand");
@@ -44,7 +46,7 @@ class Sketchpad extends Frame implements ActionListener {
         // Menu Bar
         MenuBar bar = new MenuBar();
 
-        Menu fileMenu = new Menu("File");  // File Menu
+        Menu fileMenu = new Menu("File"); // File Menu
         MenuItem save = new MenuItem("Save");
         save.addActionListener(this);
         MenuItem open = new MenuItem("Open");
@@ -80,7 +82,7 @@ class Sketchpad extends Frame implements ActionListener {
         drawModeMenu.add(erase);
         bar.add(drawModeMenu);
 
-        Menu colorMenu = new Menu("Color");  // Color Menu
+        Menu colorMenu = new Menu("Color"); // Color Menu
         MenuItem black = new MenuItem("Black");
         black.addActionListener(this);
         MenuItem blue = new MenuItem("Blue");
@@ -125,7 +127,7 @@ class Sketchpad extends Frame implements ActionListener {
             x = x0;
             y = y0;
 
-            switch(drawMode){
+            switch (drawMode) {
                 case LINE:
                 case RECTANGLE:
                 case ELLIPSE:
@@ -155,7 +157,7 @@ class Sketchpad extends Frame implements ActionListener {
                     x = e.getX();
                     y = e.getY();
                     g.drawLine(x0, y0, x, y);
-                    drawingObjects.add(new DrawingObject(x0,y0,x,y,drawMode,color));
+                    drawingObjects.add(new DrawingObject(x0, y0, x, y, drawMode, color));
                     break;
                 case LINE:
                 case RECTANGLE:
@@ -164,8 +166,8 @@ class Sketchpad extends Frame implements ActionListener {
                 case CIRCLE:
                     x = e.getX();
                     y = e.getY();
-                    drawingObjects.get(drawingObjects.size()-1).x2 = x;
-                    drawingObjects.get(drawingObjects.size()-1).y2 = y;
+                    drawingObjects.get(drawingObjects.size() - 1).x2 = x;
+                    drawingObjects.get(drawingObjects.size() - 1).y2 = y;
                     repaint();
                     break;
                 case ERASER:
@@ -186,38 +188,31 @@ class Sketchpad extends Frame implements ActionListener {
     // Action Listener
     public void actionPerformed(ActionEvent e) {
         // Clear Canvas
-        if(e.getActionCommand().equals("Clear")){
+        if (e.getActionCommand().equals("Clear")) {
             drawingObjects.clear();
             repaint();
             return;
-        }
-        else if(e.getActionCommand().equals("Save")){
+        } else if (e.getActionCommand().equals("Save")) {
             SaveSystem.Save(this, drawingObjects);
             return;
-        }
-        else if(e.getActionCommand().equals("Open")){
+        } else if (e.getActionCommand().equals("Open")) {
             drawingObjects = SaveSystem.Load(this);
             repaint();
             return;
         }
 
         // Drawing Mode Selection
-        else if(e.getActionCommand().equals("Freehand")){
+        else if (e.getActionCommand().equals("Freehand")) {
             this.drawMode = DrawMode.FREEHAND;
-        }
-        else if(e.getActionCommand().equals("Straight Line")){
+        } else if (e.getActionCommand().equals("Straight Line")) {
             this.drawMode = DrawMode.LINE;
-        }
-        else if(e.getActionCommand().equals("Rectangle")){
+        } else if (e.getActionCommand().equals("Rectangle")) {
             this.drawMode = DrawMode.RECTANGLE;
-        }
-        else if(e.getActionCommand().equals("Ellipse")){
+        } else if (e.getActionCommand().equals("Ellipse")) {
             this.drawMode = DrawMode.ELLIPSE;
-        }
-        else if(e.getActionCommand().equals("Square")){
+        } else if (e.getActionCommand().equals("Square")) {
             this.drawMode = DrawMode.SQUARE;
-        }
-        else if(e.getActionCommand().equals("Circle")){
+        } else if (e.getActionCommand().equals("Circle")) {
             this.drawMode = DrawMode.CIRCLE;
         }
         else if(e.getActionCommand().equals("Eraser")){
@@ -225,30 +220,26 @@ class Sketchpad extends Frame implements ActionListener {
         }
 
         // Color Selection
-        else if(e.getActionCommand().equals("Black")){
+        else if (e.getActionCommand().equals("Black")) {
             this.color = Color.BLACK;
-        }
-        else if(e.getActionCommand().equals("Blue")){
+        } else if (e.getActionCommand().equals("Blue")) {
             this.color = Color.BLUE;
-        }
-        else if(e.getActionCommand().equals("Green")){
+        } else if (e.getActionCommand().equals("Green")) {
             this.color = Color.GREEN;
-        }
-        else if(e.getActionCommand().equals("Red")){
+        } else if (e.getActionCommand().equals("Red")) {
             this.color = Color.RED;
-        }
-        else if(e.getActionCommand().equals("Yellow")){
+        } else if (e.getActionCommand().equals("Yellow")) {
             this.color = Color.YELLOW;
         }
 
-        updateInfoPanel();  // Update info panel if drawing mode or color changed
+        updateInfoPanel(); // Update info panel if drawing mode or color changed
     }
 
     // Updates the info panel with the current drawing mode and color selected
-    private void updateInfoPanel(){
+    private void updateInfoPanel() {
         // Update drawing mode label
         String base = "Drawing Mode: %s";
-        switch(drawMode){
+        switch (drawMode) {
             case FREEHAND:
                 lMode.setText(String.format(base, "Freehand"));
                 break;
@@ -278,8 +269,8 @@ class Sketchpad extends Frame implements ActionListener {
     }
 
     // Redraws all previous drawing objects when repaint() is called
-    public void paint(Graphics g){
-        for(DrawingObject object : drawingObjects){
+    public void paint(Graphics g) {
+        for (DrawingObject object : drawingObjects) {
             object.draw(g);
         }
     }
